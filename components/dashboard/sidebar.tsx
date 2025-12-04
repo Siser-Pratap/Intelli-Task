@@ -184,9 +184,7 @@ export function Sidebar({ selectedWorkspace, onWorkspaceChange, onViewChange }: 
                 <Avatar className="w-8 h-8 mr-3">
                   <AvatarFallback className="bg-blue-600 text-white text-sm">
                     {user?.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
+                      }
                   </AvatarFallback>
                 </Avatar>
                 <div className="text-left flex-1">
