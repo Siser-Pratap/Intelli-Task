@@ -202,7 +202,7 @@ export function LoginForm({ onToggleMode }: LoginFormProps) {
           {isLoading ? (
             <><Loader2 className="w-4 h-4 animate-spin" /> Signing in...</>
           ) : (
-            <>Sign in <ArrowRight className="w-4 h-4" /></>
+            <div className="text-black flex">Sign in <ArrowRight className="w-4 h-4 mt-1 text-black" /></div>
           )}
         </Button>
       </form>
