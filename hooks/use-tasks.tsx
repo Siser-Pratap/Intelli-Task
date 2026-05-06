@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useAuth } from "./use-auth"
 import { useWorkspaces } from "./use-workspaces"
+import { DUMMY_DATA, dummyTasks as DUMMY_TASKS } from "@/lib/dummy-data"
 
 export interface Task {
   id: string
@@ -97,6 +98,17 @@ export function TasksProvider({ children }: { children: ReactNode }) {
 
   const loadTasks = async () => {
     setIsLoading(true)
+
+    if (DUMMY_DATA) {
+      // Use Indian-named dummy data from lib/dummy-data.ts
+      const mapped: Task[] = DUMMY_TASKS.map((t) => ({
+        ...t,
+        workspaceId: currentWorkspace?.id || t.workspaceId,
+      }))
+      setTasks(mapped)
+      setIsLoading(false)
+      return
+    }
 
     // Mock data - in real app, this would fetch from API
     const mockTasks: Task[] = [

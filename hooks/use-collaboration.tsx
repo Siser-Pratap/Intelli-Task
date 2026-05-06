@@ -71,129 +71,32 @@ export function CollaborationProvider({ children }: { children: ReactNode }) {
   }, [user, currentWorkspace])
 
   const initializeCollaboration = () => {
-    // Mock initialization - in real app, this would establish WebSocket connection
     setIsConnected(true)
 
-    // Mock user presence data
     const mockPresence: UserPresence[] = [
-      {
-        userId: "1",
-        userName: "John Doe",
-        userInitials: "JD",
-        status: "online",
-        lastSeen: new Date().toISOString(),
-        currentPage: "tasks",
-      },
-      {
-        userId: "2",
-        userName: "Sarah Miller",
-        userInitials: "SM",
-        status: "online",
-        lastSeen: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-        currentPage: "dashboard",
-      },
-      {
-        userId: "3",
-        userName: "Alex Brown",
-        userInitials: "AB",
-        status: "away",
-        lastSeen: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
-      },
-      {
-        userId: "4",
-        userName: "Mike Johnson",
-        userInitials: "MJ",
-        status: "busy",
-        lastSeen: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-        currentPage: "analytics",
-      },
+      { userId: "u3", userName: "Rahul Mehta",     userInitials: "RM", status: "online",  lastSeen: new Date().toISOString(),                              currentPage: "Tasks" },
+      { userId: "u6", userName: "Ananya Krishnan", userInitials: "AK", status: "online",  lastSeen: new Date(Date.now() - 5  * 60 * 1000).toISOString(), currentPage: "Dashboard" },
+      { userId: "u5", userName: "Vikram Nair",     userInitials: "VN", status: "busy",    lastSeen: new Date(Date.now() - 10 * 60 * 1000).toISOString(), currentPage: "CI/CD Setup" },
+      { userId: "u4", userName: "Sneha Iyer",      userInitials: "SI", status: "away",    lastSeen: new Date(Date.now() - 25 * 60 * 1000).toISOString() },
+      { userId: "u8", userName: "Kavya Reddy",     userInitials: "KR", status: "online",  lastSeen: new Date(Date.now() - 2  * 60 * 1000).toISOString(), currentPage: "Analytics" },
+      { userId: "u9", userName: "Aditya Verma",    userInitials: "AV", status: "offline", lastSeen: new Date(Date.now() - 3  * 60 * 60 * 1000).toISOString() },
     ]
 
-    // Mock recent activities
     const mockActivities: ActivityItem[] = [
-      {
-        id: "1",
-        type: "task_completed",
-        userId: "2",
-        userName: "Sarah Miller",
-        userInitials: "SM",
-        description: "completed task 'Fix login validation bug'",
-        entityId: "2",
-        entityType: "task",
-        timestamp: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
-        workspaceId: currentWorkspace?.id || "",
-      },
-      {
-        id: "2",
-        type: "comment_added",
-        userId: "3",
-        userName: "Alex Brown",
-        userInitials: "AB",
-        description: "commented on 'Write unit tests for API endpoints'",
-        entityId: "3",
-        entityType: "task",
-        timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
-        workspaceId: currentWorkspace?.id || "",
-      },
-      {
-        id: "3",
-        type: "task_created",
-        userId: "1",
-        userName: "John Doe",
-        userInitials: "JD",
-        description: "created new task 'Design new dashboard layout'",
-        entityId: "4",
-        entityType: "task",
-        timestamp: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
-        workspaceId: currentWorkspace?.id || "",
-      },
-      {
-        id: "4",
-        type: "user_joined",
-        userId: "4",
-        userName: "Mike Johnson",
-        userInitials: "MJ",
-        description: "joined the workspace",
-        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-        workspaceId: currentWorkspace?.id || "",
-      },
+      { id: "a1", type: "task_completed", userId: "u6", userName: "Ananya Krishnan", userInitials: "AK", description: "completed 'Mobile app onboarding flow'",        entityId: "t4", entityType: "task",      timestamp: new Date(Date.now() - 20 * 60 * 1000).toISOString(),       workspaceId: currentWorkspace?.id || "" },
+      { id: "a2", type: "task_updated",   userId: "u3", userName: "Rahul Mehta",     userInitials: "RM", description: "updated progress on 'Homepage hero redesign'",  entityId: "t1", entityType: "task",      timestamp: new Date(Date.now() - 55 * 60 * 1000).toISOString(),       workspaceId: currentWorkspace?.id || "" },
+      { id: "a3", type: "task_created",   userId: "u5", userName: "Vikram Nair",     userInitials: "VN", description: "started working on 'Setup CI/CD pipeline'",     entityId: "t6", entityType: "task",      timestamp: new Date(Date.now() - 2  * 60 * 60 * 1000).toISOString(), workspaceId: currentWorkspace?.id || "" },
+      { id: "a4", type: "comment_added",  userId: "u4", userName: "Sneha Iyer",      userInitials: "SI", description: "commented on 'Database query optimisation'",    entityId: "t3", entityType: "task",      timestamp: new Date(Date.now() - 3  * 60 * 60 * 1000).toISOString(), workspaceId: currentWorkspace?.id || "" },
+      { id: "a5", type: "task_created",   userId: "u2", userName: "Priya Patel",     userInitials: "PP", description: "assigned 'JWT Authentication' to Vikram Nair",  entityId: "t2", entityType: "task",      timestamp: new Date(Date.now() - 5  * 60 * 60 * 1000).toISOString(), workspaceId: currentWorkspace?.id || "" },
+      { id: "a6", type: "user_joined",    userId: "u9", userName: "Aditya Verma",    userInitials: "AV", description: "joined Product Development workspace",                             entityType: "workspace", timestamp: new Date(Date.now() - 8  * 60 * 60 * 1000).toISOString(), workspaceId: currentWorkspace?.id || "" },
     ]
 
-    // Mock notifications
     const mockNotifications: Notification[] = [
-      {
-        id: "1",
-        type: "assignment",
-        title: "New Task Assignment",
-        message: "You have been assigned to 'Update user profile component'",
-        userId: user?.id || "",
-        isRead: false,
-        timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-        actionUrl: "/tasks/1",
-        priority: "high",
-      },
-      {
-        id: "2",
-        type: "mention",
-        title: "You were mentioned",
-        message: "Sarah Miller mentioned you in a comment",
-        userId: user?.id || "",
-        isRead: false,
-        timestamp: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
-        actionUrl: "/tasks/2",
-        priority: "medium",
-      },
-      {
-        id: "3",
-        type: "deadline",
-        title: "Deadline Approaching",
-        message: "Task 'Write unit tests' is due tomorrow",
-        userId: user?.id || "",
-        isRead: true,
-        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-        actionUrl: "/tasks/3",
-        priority: "high",
-      },
+      { id: "n1", type: "deadline",   title: "Task overdue",       message: "'Database query optimisation' is past its due date",                   userId: user?.id || "", isRead: false, timestamp: new Date(Date.now() - 1  * 60 * 60 * 1000).toISOString(), priority: "high" },
+      { id: "n2", type: "assignment", title: "Assigned to you",    message: "Priya Patel assigned 'OpenAPI Documentation' to you",                  userId: user?.id || "", isRead: false, timestamp: new Date(Date.now() - 3  * 60 * 60 * 1000).toISOString(), priority: "medium" },
+      { id: "n3", type: "system",     title: "AI detected blocker",message: "'JWT Auth' is blocking 3 downstream tasks. AI recommends prioritising.", userId: user?.id || "", isRead: false, timestamp: new Date(Date.now() - 5  * 60 * 60 * 1000).toISOString(), priority: "high" },
+      { id: "n4", type: "comment",    title: "New comment",        message: "Sneha Iyer commented on 'Database query optimisation'",                 userId: user?.id || "", isRead: true,  timestamp: new Date(Date.now() - 8  * 60 * 60 * 1000).toISOString(), priority: "low" },
+      { id: "n5", type: "system",     title: "Task completed",     message: "Ananya Krishnan completed 'Mobile app onboarding flow' ✓",              userId: user?.id || "", isRead: true,  timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(), priority: "low" },
     ]
 
     setUserPresence(mockPresence)
